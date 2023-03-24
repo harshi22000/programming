@@ -1,0 +1,73 @@
+// Works fro 27/35 test-cases later showed TLE
+
+    // int chk(vector<vector<int>>& items, int m)
+    // {
+    //     int n= items.size();
+    //     int i=0,j=n-1;
+    //     int ans=0;
+    //     while(i<=j)
+    //     {
+    //         int mid=i+(j-i)/2;
+    //         if(items[mid][0]<=m)
+    //         {
+    //             vector<vector<int>> its(items);
+    //             sort(its.begin()+i, its.begin()+mid+1, [](auto &left, auto &right) {
+    //                 return left[1] < right[1];
+    //             });
+    //             ans= max(ans,its[mid][1]);
+    //             i=mid+1;
+    //         }
+    //         else
+    //             j=mid-1;
+    //     }
+    //     return ans;
+    // }
+
+    // vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) 
+    // {
+    //     sort(items.begin(),items.end());
+    //     int n= queries.size();
+    //     vector<int> ans(n,0);
+    //     int i=0;
+    //     while(i<n)
+    //     {
+    //         ans[i]= chk(items,queries[i]);
+    //         i++;
+    //     }
+    //     return ans;
+    // }
+
+    vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) 
+    {
+        int n= queries.size();
+        sort(items.begin(),items.end());
+        map<int,int> mp;
+        vector<int> ans(n);
+
+        int maxi= INT_MIN;
+        for(int i=0;i<items.size();i++)
+        {
+            maxi = max(maxi, items[i][1]);
+            mp[items[i][0]]= maxi;
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            auto it= mp.lower_bound(queries[i]);
+            if(mp.find(queries[i]) != mp.end())
+            {
+                ans[i]= (*it).second;
+            }
+            else
+            {
+                if(it== mp.begin())
+                    ans[i]=0;
+                else
+                {
+                    it--;
+                    ans[i]= (*it).second;
+                }
+            }
+        }
+        return ans;
+    }
