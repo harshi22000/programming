@@ -1,0 +1,64 @@
+class Solution {
+public:   
+
+    bool chk(vector<vector<int>>& h, int mid)
+    {
+        int n=h.size();
+        int m= h[0].size();
+        int r[] = {-1,1,0,0};
+        int c[] = {0,0,-1,1};
+        queue<pair<int,int>> q;
+        vector<vector<bool>> v(n,vector<bool>(m,false));
+
+        q.push({0,0});
+        v[0][0]=true;
+
+        while(q.size())
+        {
+            int r1= q.front().first;
+            int c1= q.front().second;
+            q.pop();
+            if(r1==(n-1) && c1== (m-1))
+                return true;
+
+            for(int i=0;i<4;i++)
+            {
+                int row= r1+ r[i];
+                int col= c1+c[i];
+
+                if(row<0 || row>=n) continue;
+                if(col<0 || col>=m) continue;
+                if(v[row][col]) continue;
+
+                if(abs(h[row][col]- h[r1][c1])>mid) continue;
+                v[row][col]=true;
+                q.push({row,col});
+            }
+        }
+        return false;
+    }
+
+    int minimumEffortPath(vector<vector<int>>& h)
+    {
+        int n= h.size();
+        int m= h[0].size();
+
+        int i=0,j=1e6;
+
+        int ans=1e6;
+        while(i<=j)
+        {
+            int mid= i+(j-i)/2;
+            if(chk(h,mid))
+            {
+                ans= min(ans,mid);
+                j=mid-1;
+            }
+            else
+            {
+                i=mid+1;
+            }
+        }
+        return ans;
+    }
+};
