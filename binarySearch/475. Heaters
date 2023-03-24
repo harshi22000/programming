@@ -1,0 +1,44 @@
+
+
+// Checking whether that mid value will be able to cover all the houses.
+
+    bool chk(vector<int>& houses, vector<int>& heaters, int mid)
+    {
+        int n=heaters.size();
+        int i=0;
+        for(int j=0;j<houses.size();j++)
+        {
+            if(heaters[i]-mid<= houses[j] && heaters[i]+mid>= houses[j])
+                continue;
+            else
+            {
+                i++;
+                j--;
+            }
+            if(i>=n)
+                return false;
+        }
+        return true;
+    }
+
+    int findRadius(vector<int>& houses, vector<int>& heaters) 
+    {
+        int n= heaters.size();
+        int i=0,j=1e9;
+
+        sort(houses.begin(),houses.end());
+        sort(heaters.begin(),heaters.end());
+        int ans=30000;
+        while(i<=j)
+        {
+            int mid= i+(j-i)/2;
+            if(chk(houses,heaters,mid))
+            {
+                ans= mid;
+                j=mid-1;
+            }
+            else
+                i=mid+1;
+        }    
+        return ans;
+    }
