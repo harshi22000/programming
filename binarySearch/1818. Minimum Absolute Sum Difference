@@ -1,0 +1,39 @@
+int minAbsoluteSumDiff(vector<int>& nums1, vector<int>& nums2) 
+    {
+        int n=nums1.size();
+        vector<int> orig, later;
+        int res=0;
+        int m= 1e9+7;
+        for(int i=0;i<n;i++)
+        {
+            orig.push_back(abs(nums1[i]-nums2[i]));
+            res = (res + orig[i])%m;
+            cout<<orig[i]<<" ";
+        }
+        cout<<endl;
+        sort(nums1.begin(),nums1.end());
+        for(int i=0;i<n;i++)
+        {
+            int j= lower_bound(nums1.begin(), nums1.end(), nums2[i]) - nums1.begin();
+            if(j==0)
+            {
+                later.push_back(abs(nums2[i]- nums1[j]));
+            }
+            else if(j==n)
+            {
+                later.push_back(abs (nums1[j-1]-nums2[i]));
+            }
+            else
+            {
+                later.push_back(min(abs(nums1[j]- nums2[i]), abs(nums1[j-1]- nums2[i])));
+            }
+
+            cout<<later[i]<<" ";
+        }
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            ans = max( ans, orig[i]- later[i]);
+        }
+        return (res-ans+m)%m;
+    }
