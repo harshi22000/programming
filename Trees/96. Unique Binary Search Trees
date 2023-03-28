@@ -1,0 +1,26 @@
+    int numTrees(int n) 
+    {
+        int dp[n+1];
+        memset(dp,0,sizeof(dp));
+        dp[0]=1;
+        dp[1]=1;
+        if(n==1)
+            return 1;
+
+        if(n==2)
+            return 2;
+
+        dp[2]=2;
+
+        for(int i=3;i<=n;i++)
+        {
+            int lft= 0,ryt=i-1;
+            while(lft<= i-1)
+            {
+                dp[i] += dp[lft]*dp[ryt];
+                lft++;
+                ryt--;
+            }
+        }
+        return dp[n];
+    }
