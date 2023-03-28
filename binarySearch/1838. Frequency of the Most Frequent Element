@@ -1,0 +1,51 @@
+int maxFrequency(vector<int>& nums, int k) 
+    {
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+
+        int ans=1;
+        int i=1,j=n;
+        while(i<=j)
+        {
+            int mid = i+(j-i)/2;
+            long long sum=0, chk=0;
+
+            for(int m=0;m<mid;m++)
+            {
+                sum += nums[m];
+            }
+
+            long long should= 1LL*(nums[mid-1])*mid;
+            if(should-sum <=k)
+                chk=1;
+
+            int s=0;
+            if(chk==0)
+            {
+                for(int m=mid;m<n;m++)
+                {
+                    sum += nums[m];
+                    sum -=nums[s];
+                    s++;
+                    should = 1ll*(nums[m])*mid;
+                    if(should-sum <= k)
+                    {
+                        chk=1;
+                        break;
+                    }
+                }
+            }
+
+            if(chk==1)
+            {
+                ans=mid;
+                i=mid+1;
+            }
+            else
+            {
+                j=mid-1;
+            }
+        }
+
+        return ans;
+    }
