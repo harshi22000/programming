@@ -1,0 +1,40 @@
+
+//One way of doing this problem:
+
+    // int diameter(Node* root) 
+    // {
+    //     if(root==NULL)
+    //         return 0;
+            
+    //     int lh= height(root->left);
+    //     int rh= height(root->right);
+        
+    //     int ld= diameter(root->left);
+    //     int rd= diameter(root->right);
+        
+    //     return max({lh+rh+1, ld, rd});
+    // }
+    
+    
+    int height(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+            
+        return 1+ max(height(root->left), height(root->right));
+    }
+    
+    
+    // Another way of doing this problem:
+    int dia(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+
+        return max({1 + height(root->left) + height(root->right), dia(root->left), dia(root->right)});
+    }
+    
+    int diameter(Node* root) 
+    {
+        return dia(root);
+    }
