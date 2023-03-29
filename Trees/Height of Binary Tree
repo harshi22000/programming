@@ -1,0 +1,38 @@
+int height(struct Node* node)
+    {
+        int h=0;
+        if(node==  NULL)
+            return h;
+            
+        queue<Node*> q;
+        q.push(node);
+        
+        while(q.size())
+        {
+            h++;
+            
+            int n = q.size();
+            while(n--)
+            {
+                Node* top= q.front();
+                q.pop();
+                
+                if(top->left)
+                    q.push(top->left);
+                    
+                if(top->right)
+                    q.push(top->right);
+            }
+        }
+        return h;
+    }
+    
+    
+    // Using recursion:
+    int height(struct Node* node){
+        // code here 
+        if(node==NULL)
+            return 0;
+            
+        return 1+ max(height(node->left),height(node->right));
+    }
