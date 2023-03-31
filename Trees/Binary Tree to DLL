@@ -1,0 +1,38 @@
+class Solution
+{
+    public: 
+
+  // prev shouldn't ne passed to the function bcoz if passed then prev value will always get updated.
+    
+    Node* head;
+    Node* prev;
+            
+    void help(Node* root)
+    {
+        if(root==NULL)
+            return;
+            
+        help(root->left);
+        if(prev==NULL)
+        {
+            prev=root;
+            head=root;
+        }
+        else
+        {
+            prev->right=root;
+            root->left=prev;
+            prev=root;
+        }
+        help(root->right);
+    }
+    
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        prev=NULL;
+        head=NULL;
+        help(root);
+        return head;
+    }
+};
