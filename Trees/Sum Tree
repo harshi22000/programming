@@ -1,0 +1,30 @@
+bool isSumTree(Node* root)
+    {
+        if(root==NULL)
+            return true;
+        if(!root->left && !root->right)
+            return true;
+            
+        int ans=0;
+        if(root->left)
+        {
+            ans += root->left->data;
+            if(root->left->left || root->left->right)
+                ans = ans*2;
+        }
+            
+        if(root->right)
+        {
+            int m=0;
+            m += root->right->data;
+            if(root->right->right || root->right->left)
+                m = m*2;
+                
+            ans += m;
+        }
+            
+        if(ans != root->data)
+            return false;
+            
+        return isSumTree(root->left) && isSumTree(root->left);
+    }
