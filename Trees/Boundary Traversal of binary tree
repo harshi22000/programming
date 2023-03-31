@@ -1,0 +1,62 @@
+    void printBottom(Node* root, vector<int> &ans)
+    {
+        if(root==NULL)
+            return;
+            
+        printBottom(root->left,ans);
+        
+        if(!(root->left) && !(root->right))
+            ans.push_back(root->data);
+            
+        printBottom(root->right,ans);
+    }
+    
+    void printLeft(Node* root, vector<int>& ans)
+    {
+        if(root== NULL)
+            return;
+            
+        if(root->left)
+        {
+            ans.push_back(root->data);
+            printLeft(root->left,ans);
+        }
+        else if(root->right)
+        {
+            ans.push_back(root->data);
+            printLeft(root->right,ans);
+        }
+    }
+    
+    void printRight(Node* root, vector<int>& ans)
+    {
+        if(root==NULL)
+            return;
+            
+        if(root->right)
+        {
+            printRight(root->right,ans);
+            ans.push_back(root->data);
+        }
+        else if(root->left)
+        {
+            printRight(root->left,ans);
+            ans.push_back(root->data);
+        }
+    }
+    
+    
+    vector <int> boundary(Node *root)
+    {
+        if(root==NULL)
+            return {};
+            
+        vector<int> ans;
+        ans.push_back(root->data);
+        printLeft(root->left,ans);
+        printBottom(root->left,ans);
+        printBottom(root->right,ans);
+        printRight(root->right,ans);
+        
+        return ans;
+    }
